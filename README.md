@@ -15,7 +15,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 
 ##Configure ShortMap
 
-* Change the conf/core-site.xml to include total column count (the total number of columns per row in the dataset), index directory (where the index files are stored) and total record count per index (As the index is kept in memory, make sure this amount is not too large). Sample 3 configurations are shown below.
+* Change the file `conf/core-site.xml` to include total column count (the total number of columns per row in the dataset), index directory (where the index files are stored) and total record count per index (As the index is kept in memory, make sure this amount is not too large). Sample 3 configurations are shown below.
 ```xml
 <property> 
 	<name>dfs.block.total.column.count</name> 
@@ -37,7 +37,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 </property>
 ```
 
-* Change the conf/mapred-site.xml to have maximum of 1 mapper and reducer per each task node. Sample configuration is shown below.
+* Change the file `conf/mapred-site.xml` to have maximum of 1 mapper and reducer per each task node. Sample configuration is shown below.
 ```xml
 <property> 
   	<name>mapreduce.tasktracker.map.tasks.maximum</name> 
@@ -49,7 +49,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 </property>
 ```
 
-* Change the conf/hdfs-site.xml to have the replication factor as 1. We assume that there will not be any failures and each node will act as a mapper and a reducer. 
+* Change the file `conf/hdfs-site.xml` to have the replication factor as 1. We assume that there will not be any failures and each node will act as a mapper and a reducer. 
 ```xml
 <property> 
 	<name>dfs.replication</name> 
@@ -79,11 +79,7 @@ example:
 
 {number of nodes} = Specifies the number of nodes involved in the system
 
-{node list} = File specifying the machine names of hosts separated by newline. Required to keep one-to-one mapping of mapper to reducer.                                                                                                      
-E.g.:                                                                                                                   
-	machine1                                                                                        
-	machine2                                                                                        
-	machine3                                                                                        
+{node list} = File specifying the machine names of Task Tracker nodes separated by newline. Required to keep one-to-one mapping of mapper to reducer.                                                                                          
 
 {column index} = This indicates the column number(zero based) that is relevant to the group attribute (which will be used to generate the index). 
 
@@ -103,7 +99,7 @@ Note: There should be no index created on the target folders
 
 In this section we provide a sample hadoop job which uses the configuration presented above.
 
-This job uses column 1 of the input file, filtering records with value “C” in column 0. In order to avoid reading the records of a block after reading records with “C” we have to retrieve the <index column> (column 0 in this case) as well. (To avoid others from map task as shown later. There using String valToConsider = value.toString().split(ShortMapRecordReader.COLUMN_REPLACER)[<Index column>]; we can skip reading the block if valToConsider is not equal to filter val).
+This job uses column 1 of the input file, filtering records with value “C” in column 0. In order to avoid reading the records of a block after reading records with “C” we have to retrieve the <index column> (column 0 in this case) as well. (To avoid others from map task as shown later. There using `String valToConsider = value.toString().split(ShortMapRecordReader.COLUMN_REPLACER)[<Index column>];` we can skip reading the block if valToConsider is not equal to filter val).
 
 ###Input file
     [C,1,456,789]
