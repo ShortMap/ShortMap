@@ -154,39 +154,39 @@ public class TupleCount extends Configured implements Tool
 }
 
 ###Map class
-public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable>
-{                                                                                                                       
-    private final IntWritable one = new IntWritable(1);                                                                 
-    Text word = new Text();                                                                                             
-    String fileName = null;                                                                                             
-    JobConf conf = null;                                                                                                
+    public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable>
+    {                                                                                                                       
+		private final IntWritable one = new IntWritable(1);                                                                 
+		Text word = new Text();                                                                                             
+		String fileName = null;                                                                                             
+		JobConf conf = null;                                                                                                
 
-    public void configure(JobConf job)
-    {
-        conf = job;
-        System.out.println("configuring");
+		public void configure(JobConf job)
+		{
+			conf = job;
+			System.out.println("configuring");
+		}
+
+		@Override
+		public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> outputCollector, Reporter reporter)
+		throws IOException
+		{
+
+			String filterStr = conf.get("filterValues");
+			System.out.println("filter is "+filterStr);
+			String valToConsider = value.toString().split(ShortMapRecordReader.COLUMN_REPLACER)[0];
+			System.out.println("val to condider "+valToConsider);
+			if (filterStr.toLowerCase().equals(valToConsider.toLowerCase()))
+			{
+				word.set(filterStr.toLowerCase().toString());
+				outputCollector.collect(word, one);
+			} else
+			{
+				System.out.println("Skipping " + value.toString());
+				ShortMapRecordReader.statusId = -1;// stop read if irrelavant
+			}
+		}
     }
-
-    @Override
-    public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> outputCollector, Reporter reporter)
-    throws IOException
-    {
-
-        String filterStr = conf.get("filterValues");
-        System.out.println("filter is "+filterStr);
-        String valToConsider = value.toString().split(ShortMapRecordReader.COLUMN_REPLACER)[0];
-        System.out.println("val to condider "+valToConsider);
-        if (filterStr.toLowerCase().equals(valToConsider.toLowerCase()))
-        {
-            word.set(filterStr.toLowerCase().toString());
-            outputCollector.collect(word, one);
-        } else
-        {
-            System.out.println("Skipping " + value.toString());
-            ShortMapRecordReader.statusId = -1;// stop read if irrelavant
-        }
-    }
-}
 
 ###Reducer class
     public class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable>
