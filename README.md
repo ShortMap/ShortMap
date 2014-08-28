@@ -16,12 +16,12 @@ ant`
 ##Configure Hadoop
 
 4. Change the conf/core-site.xml to include total column count (the total number of columns per row in the dataset), index directory (where the index files are stored) and total record count per index (As the index is kept in memory, make sure this amount is not too large). Sample 3 configurations are shown below.
-`<property> 
+    `<property> 
 	<name>dfs.block.total.column.count</name> 
 	<value>4</value> 
 	<description> Total number of columns per row in a dataset 
 	</description> 
-</property> 
+    </property> 
 <property> 
 	<name>index.dir.loc</name> 
 	<value>/home/index</value> 
