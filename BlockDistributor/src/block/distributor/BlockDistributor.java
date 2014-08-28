@@ -110,27 +110,6 @@ public class BlockDistributor extends Configured implements Tool {
 
 		// write output locations to file
 		System.out.println("job completed");
-
-		PrintWriter writer = new PrintWriter("/home/chathuri/sample.txt",
-				"UTF-8");
-		String fileName = args[4];
-		FileSystem fileSystem = FileSystem.get(conf);
-		FileStatus[] status = fileSystem.listStatus(new Path(fileName));
-		if (status.length > 0) {
-			for (int i = 0; i < status.length; i++) {
-				if (!status[i].isDir()) {
-					writer.println(status[i].getPath());
-					BlockLocation[] loc = fileSystem.getFileBlockLocations(
-							status[i], 0, status[i].getLen());
-					for (int j = 0; j < loc.length; j++) {
-						writer.println("----" + loc[j]);
-					}
-				}
-			}
-		} else {
-			System.out.println("No output file found");
-		}
-		writer.close();
 		return 0;
 	}
 
