@@ -63,7 +63,7 @@ ant`
 ant
 ant build-jar`
 
-[This project uses a reference to hadoop-core-1.2.1.jar which is generated in step 2.]
+    [This project uses a reference to hadoop-core-1.2.1.jar which is generated in step 2.]
 
 9. Run preprocessing job.
 `hadoop jar BlockDistributor.jar block.distributor.BlockDistributor -Dmapred.reduce.tasks=<number of nodes>  <node list> <number of columns> <output block size> <input folder> <output folder>`
