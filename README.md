@@ -121,7 +121,7 @@ This job uses column 1 of the input file, filtering records with value “C” i
 		@Override
 		public int run(String[] args) throws Exception
 		{
-			System.out.println("Output location is " + args[2]);
+			System.out.println("Output location is " + args[1]);
 			JobConf conf = new JobConf(TupleCount.class);
 			conf.setJobName("tuplecount");
 			conf.setNumReduceTasks(1);
@@ -131,14 +131,10 @@ This job uses column 1 of the input file, filtering records with value “C” i
 			conf.setReducerClass(Reduce.class);
 			conf.setInputFormat(ShortMapInputFormat.class);
 			conf.setOutputFormat(TextOutputFormat.class);
-			TextOutputFormat.setCompressOutput(conf, true);
 			conf.set("filterValues", "\"C\"");// ,\"D\"
-			conf.set("map.input.nodes", "ubuntu:0");
-			conf.setIfUnset("columnCount", args[0]);
-			conf.setIfUnset("outputloc", args[2]);
 			conf.set("relevantAttrs", "0,1");
-			FileInputFormat.setInputPaths(conf, new Path(args[1]));
-			FileOutputFormat.setOutputPath(conf, new Path(args[2]));
+			FileInputFormat.setInputPaths(conf, new Path(args[0]));
+			FileOutputFormat.setOutputPath(conf, new Path(args[1]));
 
 			JobClient.runJob(conf);
 
