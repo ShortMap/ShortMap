@@ -113,45 +113,44 @@ This job uses column 1 of the input file, filtering records with value “C” i
     [A,5,456,789]
 
 ###Main class, TupleCount.java
-public class TupleCount extends Configured implements Tool
-{
-
-    public static void main(String[] args) throws Exception
+    public class TupleCount extends Configured implements Tool
     {
+		public static void main(String[] args) throws Exception
+		{
 
-        int res = ToolRunner.run(new Configuration(), new TupleCount(), args);
-        System.exit(res);
+			int res = ToolRunner.run(new Configuration(), new TupleCount(), args);
+			System.exit(res);
+		}
+
+		@Override
+		public int run(String[] args) throws Exception
+		{
+			System.out.println("Output location is " + args[2]);
+			JobConf conf = new JobConf(TupleCount.class);
+			conf.setJobName("tuplecount");
+			conf.setNumReduceTasks(1);
+			conf.setOutputKeyClass(Text.class);
+			conf.setOutputValueClass(IntWritable.class);
+			conf.setMapperClass(Map.class);
+			conf.setReducerClass(Reduce.class);
+			conf.setInputFormat(ShortMapInputFormat.class);
+			conf.setOutputFormat(TextOutputFormat.class);
+			TextOutputFormat.setCompressOutput(conf, true);
+			conf.set("filterValues", "\"C\"");// ,\"D\"
+			conf.set("map.input.nodes", "ubuntu:0");
+			conf.setIfUnset("columnCount", args[0]);
+			conf.setIfUnset("outputloc", args[2]);
+			conf.set("relevantAttrs", "0,1");
+			FileInputFormat.setInputPaths(conf, new Path(args[1]));
+			FileOutputFormat.setOutputPath(conf, new Path(args[2]));
+
+			JobClient.runJob(conf);
+
+			// print file locations
+			System.out.println("job completed");
+			return 0;
+		}
     }
-
-    @Override
-    public int run(String[] args) throws Exception
-    {
-        System.out.println("Output location is " + args[2]);
-        JobConf conf = new JobConf(TupleCount.class);
-        conf.setJobName("tuplecount");
-        conf.setNumReduceTasks(1);
-        conf.setOutputKeyClass(Text.class);
-        conf.setOutputValueClass(IntWritable.class);
-        conf.setMapperClass(Map.class);
-        conf.setReducerClass(Reduce.class);
-        conf.setInputFormat(ShortMapInputFormat.class);
-        conf.setOutputFormat(TextOutputFormat.class);
-        TextOutputFormat.setCompressOutput(conf, true);
-        conf.set("filterValues", "\"C\"");// ,\"D\"
-        conf.set("map.input.nodes", "ubuntu:0");
-        conf.setIfUnset("columnCount", args[0]);
-        conf.setIfUnset("outputloc", args[2]);
-        conf.set("relevantAttrs", "0,1");
-        FileInputFormat.setInputPaths(conf, new Path(args[1]));
-        FileOutputFormat.setOutputPath(conf, new Path(args[2]));
-
-        JobClient.runJob(conf);
-
-        // print file locations
-        System.out.println("job completed");
-        return 0;
-    }
-}
 
 ###Map class
     public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable>
