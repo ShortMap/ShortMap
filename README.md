@@ -13,7 +13,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 
 * When ShortMap is built, 4 jars are created inside the build folder. Copy these 4 jars into the hadoop-common folder. 
 
-##Configure Hadoop
+##Configure ShortMap
 
 * Change the conf/core-site.xml to include total column count (the total number of columns per row in the dataset), index directory (where the index files are stored) and total record count per index (As the index is kept in memory, make sure this amount is not too large). Sample 3 configurations are shown below.
 ```xml
@@ -58,7 +58,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 </property>
 ```
 
-* Startup the cluster
+* Startup the cluster                                                                                                   
 `./bin/start-all.sh`
 
 ##Pre-process data
@@ -129,7 +129,7 @@ public class TupleCount extends Configured implements Tool
         JobConf conf = new JobConf(TupleCount.class);
         conf.setJobName("tuplecount");
         conf.setNumReduceTasks(1);
-        conf.setOutputKeyClass(Text.class);// Both map and reduce map has <Text,Text> format
+        conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(IntWritable.class);
         conf.setMapperClass(Map.class);
         conf.setReducerClass(Reduce.class);
