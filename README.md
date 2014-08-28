@@ -189,22 +189,21 @@ public class Map extends MapReduceBase implements Mapper<LongWritable, Text, Tex
 }
 
 ###Reducer class
-public class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable>
-{
-
-    @Override
-    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException
+    public class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable>
     {
-        System.out.println("inside reducer");
-        IntWritable count=new IntWritable();
-        int sum=0;
-        while (values.hasNext())
-        {
-            sum++;
-            values.next();
-        }
-        System.out.println("sum is "+sum);
-        count.set(sum);
-        output.collect(key ,count);
+		@Override
+		public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException
+		{
+			System.out.println("inside reducer");
+			IntWritable count=new IntWritable();
+			int sum=0;
+			while (values.hasNext())
+			{
+				sum++;
+				values.next();
+			}
+			System.out.println("sum is "+sum);
+			count.set(sum);
+			output.collect(key ,count);
+		}
     }
-}
