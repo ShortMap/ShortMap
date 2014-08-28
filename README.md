@@ -73,7 +73,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 `hadoop jar BlockDistributor.jar block.distributor.BlockDistributor -Dmapred.reduce.tasks={number of nodes}  {node list} {number of columns} {output block size} {input folder} {output folder}`
 
 example:
-`hadoop jar BlockDistributor.jar block.distributor.BlockDistributor -Dmapred.reduce.tasks=3  -libjars /home/chathuri/gson-2.2.4.jar /home/gayana/hosts.txt 0 13422222 /hadoop/input /hadoop/opj2 `
+`hadoop jar BlockDistributor.jar block.distributor.BlockDistributor -Dmapred.reduce.tasks=3  -libjars /home/chathuri/gson-2.2.4.jar /home/chathuri/hosts.txt 0 13422222 /hadoop/input /hadoop/opj2 `
 
 [we use gson library to process json array. So users have to specify it with -libjars option]
 
