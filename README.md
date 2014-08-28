@@ -101,11 +101,11 @@ In this section we provide a sample hadoop job which uses the configuration pres
 This job uses column 1 of the input file, filtering records with value “C” in column 0. In order to avoid reading the records of a block after reading records with “C” we have to retrieve the <index column> (column 0 in this case) as well. (To avoid others from map task as shown later. There using String valToConsider = value.toString().split(ShortMapRecordReader.COLUMN_REPLACER)[<Index column>]; we can skip reading the block if valToConsider is not equal to filter val).
 
 ##Input file
-[C,1,456,789]
-[D,2,456,789]
-[C,3,456,789]
-[B,4,456,789]
-[A,5,456,789]
+    [C,1,456,789]
+    [D,2,456,789]
+    [C,3,456,789]
+    [B,4,456,789]
+    [A,5,456,789]
 
 ##Main class, TupleCount.java
 public class TupleCount extends Configured implements Tool
