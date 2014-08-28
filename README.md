@@ -79,10 +79,11 @@ example:
 
 {number of nodes} = Specifies the number of nodes involved in the system
 
-{node list} = File specifying the machine names of hosts separated by newline. Required to keep one-to-one mapping of mapper to reducer. E.g.:
-	machine1.gsd.inesc-id.pt
-	machine2.gsd.inesc-id.pt
-	machine3.gsd.inesc-id.pt
+{node list} = File specifying the machine names of hosts separated by newline. Required to keep one-to-one mapping of mapper to reducer.                                                                                                      
+E.g.:                                                                                                                   
+	machine1.gsd.inesc-id.pt                                                                                        
+	machine2.gsd.inesc-id.pt                                                                                        
+	machine3.gsd.inesc-id.pt                                                                                        
 
 {number of columns} = This indicates the column number(zero based) that is relevant to the group attribute (which will be used to generate the index). 
 
