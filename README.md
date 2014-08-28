@@ -11,7 +11,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
     `ant clean`                                                                                                         
     `ant`
 
-* When ShortMap is built, 4 jars are created inside the build folder. Copy these 4 jars into the hadoop-common folder. 
+* When ShortMap is built, 4 jars are created inside the build folder. Copy these 4 jars into the ShortMap folder. 
 
 ##Configure ShortMap
 
@@ -63,7 +63,7 @@ Working prototype of ShortMap, a system that combines the use of an appropriate 
 
 ##Pre-process data
 
-* Build BlockDistributor preprocessing job. This is available at hadoop-common/BlockDistributor as a separate project from hadoop source.                                                                                                    
+* Build BlockDistributor preprocessing job. This is available at ShortMap/BlockDistributor as a separate project from hadoop source.                                                                                                    
     `cd BlockDistributor`                                                                                               
     `ant`                                                                                                               
     `ant build-jar`                                                                                                      
